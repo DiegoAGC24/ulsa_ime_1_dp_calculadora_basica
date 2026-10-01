@@ -57,7 +57,17 @@ g++ -Wall -Wextra -std=c++17 main.cpp -o calculadora
 <!-- Pega aquí lo que muestra tu programa en pantalla con una división donde primero escribes 0 como segundo número. -->
 
 ```
-_____
+Calculadora basica
+1) Suma
+2) Resta
+3) Multiplicacion
+4) Division
+Elige una opcion (1-4): 4
+Primer numero: 5
+Segundo numero: 0
+No se puede dividir entre cero
+Segundo numero (distinto de 0): 2
+5 / 2 = 2.5
 ```
 
 ## 8. De la receta al código (Fase 3)
@@ -65,56 +75,56 @@ _____
 
 | Paso de la receta | Instrucción de C++ que lo implementa |
 |---|---|
-| 1 y 2. Título y menú | _____ |
-| 3. Leer y validar la opción | _____ |
-| 4 y 5. Leer `a` y `b` | _____ |
-| 6. Validar el divisor | _____ |
-| 7. Decisión múltiple (un `case`) | _____ |
-| 8. Mostrar el resultado | _____ |
+| 1 y 2. Título y menú | std::cout << "Calculadora basica\n"; y los std::cout que muestran las cuatro opciones. |
+| 3. Leer y validar la opción | do { opcion = leerEntero("Elige una opcion (1-4): "); ... } while (opcion < 1 |
+| 4 y 5. Leer `a` y `b` | a = leerDecimal("Primer numero: "); y b = leerDecimal("Segundo numero: "); |
+| 6. Validar el divisor | if (opcion == 4) { while (b == 0) { ... } } |
+| 7. Decisión múltiple (un `case`) | switch (opcion) { case 1: resultado = a + b; simbolo = '+'; break; ... } |
+| 8. Mostrar el resultado | std::cout << a << " " << simbolo << " " << b << " = " << resultado << "\n"; |
 
 **¿Hubo algún paso de la receta que te costó traducir a C++? ¿Cuál y por qué?**
-_____
+El Paso 7 fue el que más me costó porque tuve que entender cómo funciona switch, case y break para realizar una operación diferente dependiendo de la opción.
 
 ## 9. Experimentos (Fase 3)
 
 **Experimento A: sin el `break` del `case 1`, ¿qué mostró el programa con 8 + 5? ¿Qué te dijo el compilador? ¿Por qué pasó?**
-_____
+El programa siguió ejecutando el siguiente case porque al quitar break ocurre un fall-through. El compilador mostró una advertencia relacionada con la posibilidad de continuar al siguiente case. Esto pasó porque break es el que detiene la ejecución del switch.
 
 **Experimento B: sin la validación del Paso 6, ¿qué mostró el programa con 5 / 0? ¿Tiene sentido?**
-_____
+El programa mostró un valor especial que representa infinito. No es un resultado útil para una calculadora, por eso es necesario validar que el divisor no sea 0 antes de realizar la división.
 
 **Experimento C (opcional): con `a` y `b` de tipo `int`, ¿qué resultado dio 7 / 2? ¿Te avisó el compilador?**
-_____
+El resultado fue 3 porque entre dos variables int la división es entera y se descarta la parte decimal. El compilador no necesariamente avisa de este problema.
 
 ## 10. Tabla de pruebas (Fase 4)
 
 | Caso | Entradas (opción, a, b) | Esperado | Obtenido | ¿Pasó? |
 |---|---|---|---|---|
-| Suma | 1, 8, 5 | 8 + 5 = 13 | _____ | _____ |
-| Resta negativa | 2, 3, 5 | 3 - 5 = -2 | _____ | _____ |
-| Multiplicación con decimales | 3, 2.5, 4 | 2.5 * 4 = 10 | _____ | _____ |
-| Multiplicación con negativo | 3, -3, 4 | -3 * 4 = -12 | _____ | _____ |
-| División | 4, 7, 2 | 7 / 2 = 3.5 | _____ | _____ |
-| Dividendo cero | 4, 0, 5 | 0 / 5 = 0 | _____ | _____ |
-| Divisor cero | 4, 5, 0 (luego 2) | vuelve a pedir `b`; 5 / 2 = 2.5 | _____ | _____ |
-| Suma con cero | 1, 5, 0 | 5 + 0 = 5 (**no** vuelve a pedir `b`) | _____ | _____ |
-| Opción fuera de rango | 5 (luego 1), 8, 5 | vuelve a pedir la opción; 8 + 5 = 13 | _____ | _____ |
-| Opción cero | 0 (luego 1), 8, 5 | vuelve a pedir la opción; 8 + 5 = 13 | _____ | _____ |
-| Opción decimal | 2.5 (luego 2), 3, 5 | `leerEntero` vuelve a pedir; 3 - 5 = -2 | _____ | _____ |
-| Opción con texto | `suma` (luego 1), 8, 5 | `leerEntero` vuelve a pedir; 8 + 5 = 13 | _____ | _____ |
-| Número con texto | 1, `abc` (luego 8), 5 | `leerDecimal` vuelve a pedir; 8 + 5 = 13 | _____ | _____ |
-| Caso propio 1 | _____ | _____ | _____ | _____ |
-| Caso propio 2 | _____ | _____ | _____ | _____ |
+| Suma | 1, 8, 5 | 8 + 5 = 13 | 8 + 5 = 13 | Sí |
+| Resta negativa | 2, 3, 5 | 3 - 5 = -2 | 3 - 5 = -2 | Sí |
+| Multiplicación con decimales | 3, 2.5, 4 | 2.5 * 4 = 10 | 2.5 * 4 = 10 | Sí |
+| Multiplicación con negativo | 3, -3, 4 | -3 * 4 = -12 | -3 * 4 = -12 | Sí |
+| División | 4, 7, 2 | 7 / 2 = 3.5 | 7 / 2 = 3.5 | Sí |
+| Dividendo cero | 4, 0, 5 | 0 / 5 = 0 | 0 / 5 = 0 | Sí |
+| Divisor cero | 4, 5, 0 (luego 2) | vuelve a pedir `b`; 5 / 2 = 2.5 | vuelve a pedir b; 5 / 2 = 2.5 | Sí |
+| Suma con cero | 1, 5, 0 | 5 + 0 = 5 (**no** vuelve a pedir `b`) | 5 + 0 = 5 | Sí |
+| Opción fuera de rango | 5 (luego 1), 8, 5 | vuelve a pedir la opción; 8 + 5 = 13 | vuelve a pedir la opción; 8 + 5 = 13 | Sí |
+| Opción cero | 0 (luego 1), 8, 5 | vuelve a pedir la opción; 8 + 5 = 13 | vuelve a pedir la opción; 8 + 5 = 13 | Sí |
+| Opción decimal | 2.5 (luego 2), 3, 5 | `leerEntero` vuelve a pedir; 3 - 5 = -2 |  | SíleerEntero vuelve a pedir; 3 - 5 = -2 |
+| Opción con texto | `suma` (luego 1), 8, 5 | `leerEntero` vuelve a pedir; 8 + 5 = 13 | leerEntero vuelve a pedir; 8 + 5 = 13 | Sí |
+| Número con texto | 1, `abc` (luego 8), 5 | `leerDecimal` vuelve a pedir; 8 + 5 = 13 | leerDecimal vuelve a pedir; 8 + 5 = 13 | Sí |
+| Caso propio 1 | 3, 0, -5 | 0 * -5 = 0 | 0 * -5 = 0 | Sí |
+| Caso propio 2 | 2, -10, -5 | -10 - -5 = -5 | -10 - -5 = -5 | Sí |
 
 ## 11. Bitácora de mejoras (Fase 4)
 
 | # | ¿Qué falló o qué quise mejorar? | ¿Qué cambié? | ¿Funcionó? |
 |---|---|---|---|
-| 1 | _____ | _____ | _____ |
-| 2 | _____ | _____ | _____ |
+| 1 | Al principio podía ocurrir una división entre cero. | Agregué la validación del divisor del Paso 6. | Sí |
+| 2 | La opción podía estar fuera del rango permitido. | Agregué el ciclo para volver a pedir la opción cuando no está entre 1 y 4 | Sí |
 
 **¿Encontré algo que la receta no contemplaba? ¿Qué?**
-_____
+No encontré un problema importante que la receta no contemplara. La receta incluye las validaciones necesarias para la opción y para el divisor.
 
 **Reto elegido (opcional):** _____
 
@@ -122,37 +132,37 @@ _____
 
 | Duda | Lo que ya intenté |
 |---|---|
-| _____ | _____ |
+| ¿Por qué al dividir dos variables int se pierde la parte decimal? | Probé el Experimento C y observé que 7 / 2 da 3 en lugar de 3.5. |
 
 ## 13. Reflexión final
 
 **¿Qué aprendí con esta práctica?**
-_____
+Aprendí a utilizar switch, case y break para realizar diferentes operaciones dependiendo de una opción. También aprendí a validar datos y a utilizar double para trabajar con números decimales.
 
 **Ahora que terminé, ¿qué cambiaría de mi proceso?**
-_____
+Intentaría probar cada parte del programa conforme la voy programando para encontrar los errores más rápido.
 
 **¿Qué fue lo más difícil y cómo lo resolví?**
-_____
+Lo más difícil fue entender cómo funcionaba switch y por qué era necesario utilizar break. Lo resolví revisando la receta y haciendo el Experimento A.
 
 **¿Qué pregunta me quedó sin responder?**
-_____
+Me quedó la duda de por qué los números double pueden producir valores especiales como infinito cuando se divide entre cero.
 
 **¿Fue más fácil programar a partir de una receta ajena que de la mía? ¿Por qué?**
-_____
+Sí, porque la receta ya tenía los pasos definidos y solo tuve que traducir cada uno a instrucciones de C++.
 
 **Si yo hubiera diseñado la receta, ¿qué le cambiaría?**
-_____
+Agregaría algún ejemplo de código pequeño junto a cada paso para entender más rápido cómo traducirlo a C++.
 
 ## 14. Lista de verificación antes de entregar (Fase 5)
 
-- [ ] Llené las secciones 7 a 13 (no quedan `_____`)
-- [ ] No modifiqué las secciones 1 a 6 ni la receta de `RECETA.md`
-- [ ] Cada bloque de `main.cpp` tiene su comentario `// Paso N`
-- [ ] Mi programa compila sin advertencias
-- [ ] Probé todos los casos de la tabla
-- [ ] Hice los Experimentos A y B y dejé el código correcto al terminar
-- [ ] No modifiqué `utilerias.h`
-- [ ] Hice al menos 4 commits con mensajes claros
-- [ ] Hice `git push` y verifiqué mi fork en GitHub
-- [ ] Entregué el enlace de mi fork en Classroom
+- [x ] Llené las secciones 7 a 13 (no quedan `_____`)
+- [x ] No modifiqué las secciones 1 a 6 ni la receta de `RECETA.md`
+- [x ] Cada bloque de `main.cpp` tiene su comentario `// Paso N`
+- [ x] Mi programa compila sin advertencias
+- [ x] Probé todos los casos de la tabla
+- [x ] Hice los Experimentos A y B y dejé el código correcto al terminar
+- [x ] No modifiqué `utilerias.h`
+- [x ] Hice al menos 4 commits con mensajes claros
+- [x ] Hice `git push` y verifiqué mi fork en GitHub
+- [x ] Entregué el enlace de mi fork en Classroom
